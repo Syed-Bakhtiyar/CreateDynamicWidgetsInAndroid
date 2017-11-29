@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="bilal.com.createdynamicwidgets.MainActivity">
+
+    <RelativeLayout
+        android:id="@+id/toplayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="3dp"
+        android:background="@color/colorMain">
+
+        <ImageView
+            android:id="@+id/button_home"
+            android:layout_width="30dp"
+            android:layout_height="27dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/ic_home" />
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="REPORT SUMMARY"
+            android:textColor="@color/colorWhite"
+            android:textSize="21sp" />
+
+        <ImageView
+            android:id="@+id/button_sync_data"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:padding="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/ic_sync" />
+
+    </RelativeLayout>
+
+
+    <ListView
+        android:divider="@android:color/transparent"
+        android:layout_margin="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/list"/>
+
+</LinearLayout>
