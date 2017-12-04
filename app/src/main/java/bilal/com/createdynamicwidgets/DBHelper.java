@@ -126,6 +126,8 @@ public class DBHelper extends SQLiteOpenHelper {
         String query = "SELECT s.server_id, s.title, s.created_at, sq.server_id, sq.question_title, sq.question_type, sq.answer_type, sq.question_image,sq.options from "+SERVEY_TABLE+" s " +
                 "inner join "+QUESTION_TABLE+" sq on s.server_id = sq.servey_table_id";
 
+        int q_num = 1;
+
         Cursor cursor = db.rawQuery(query,null);
 
         if(cursor != null && cursor.moveToNext()){
@@ -133,7 +135,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
                 arrayList.add(new ServeyModel(
                         cursor.getString(1),
-                        cursor.getString(4),
+                        q_num+": "+cursor.getString(4),
                         cursor.getString(0),
                         "",
                         cursor.getString(5),
@@ -143,6 +145,8 @@ public class DBHelper extends SQLiteOpenHelper {
                         cursor.getString(7),
                         ""
                 ));
+
+                q_num += 1;
 
             }while (cursor.moveToNext());
 

@@ -7,6 +7,14 @@
     <color name="colorWhite">#ffffff</color>
     <color name="drawer_background_color">#ebebed</color>
     <color name="colorBlack">#ff000000</color>
-
-
+    <color name="colorLightWhite">#F4F5F5</color>
+    <color name="myGreen">#5CB85C</color>
+    <color name="colorRed">#d50000</color>
+    <color name="googleBlue">#4a80f5</color>
+    <color name="colorPurple">#800080</color>
+    <color name="lightBrown">#7A7680</color>
+    <color name="Green">#697802</color>
+    <color name="backgrounGreen">#25AE88</color>
+    <color name="transparent">#00000000</color>
+    <color name="grayGrad">#fafafa</color>
 </resources>

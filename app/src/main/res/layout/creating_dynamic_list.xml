@@ -4,13 +4,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    >
+    android:background="@color/colorWhite">
 
-    <android.support.v7.widget.CardView
-        app:cardElevation="10dp"
-        android:padding="14dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_margin="3dp"
@@ -19,19 +14,21 @@
             android:orientation="vertical">
 
             <TextView
+                android:layout_margin="8dp"
                 android:id="@+id/question_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/colorBlack"
-                android:textSize="20sp" />
+                android:textSize="25sp" />
 
             <TextView
+                android:layout_margin="8dp"
                 android:id="@+id/answer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="A: "
                 android:textColor="@color/colorMain"
-                android:textSize="15sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <LinearLayout
@@ -63,7 +60,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="@color/colorMain"></LinearLayout>
+                android:background="@color/drawer_background_color"></LinearLayout>
 
             <!--<ImageView-->
                 <!--android:id="@+id/capture"-->
@@ -71,5 +68,5 @@
                 <!--android:layout_height="200dp"-->
                 <!--android:background="@drawable/ic_camera"/>-->
         </LinearLayout>
-    </android.support.v7.widget.CardView>
+
 </LinearLayout>

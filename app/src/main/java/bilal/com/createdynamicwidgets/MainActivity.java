@@ -5,15 +5,27 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -30,6 +42,7 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -61,10 +74,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public static final int REQUEST_CODE_CAPTURE_IMAGE = 124;
 
+    LinearLayout parent_layout;
+
+    ArrayList<HashMap<String, Object>> arrayListForCollectData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+//        findViewById(R.id.temp).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                finish();
+//                startActivity(getIntent());
+//            }
+//        });
+
+        arrayListForCollectData = new ArrayList<>();
+
 
         initialize();
     }
@@ -144,13 +172,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
 
+
+
         }
 
-        listView = (ListView) findViewById(R.id.list);
+//        listView = (ListView) findViewById(R.id.list);
 
-        serveyCustomAdapter = new ServeyCustomAdapter(MainActivity.this,array_list);
+//        serveyCustomAdapter = new ServeyCustomAdapter(MainActivity.this,array_list);
 
-        listView.setAdapter(serveyCustomAdapter);
+//        listView.setAdapter(serveyCustomAdapter);
+
+        parent_layout = (LinearLayout) findViewById(R.id.parent);
 
         progressDialog.setCanceledOnTouchOutside(false);
 
@@ -160,7 +192,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         button_sync_data.setOnClickListener(this);
 
+        functionCreateWidgets();
     }
+
 
     @Override
     public void onClick(View view) {
@@ -459,5 +493,598 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         return false;
 
+    }
+
+
+    private void functionCreateWidgets(){
+
+        final HashMap<String,Object> for_radio = new HashMap<>();
+
+//        HashMap<String,Object> hashMap = new HashMap<>();
+
+        for(final ServeyModel serveyModel :array_list){
+
+
+
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+            LinearLayout.LayoutParams layoutParam_for_linear = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+            layoutParam_for_linear.setMargins(8,8,8,8);
+
+            LinearLayout layout_for_all = new LinearLayout(MainActivity.this);
+
+            layout_for_all.setPadding(18,18,18,18);
+
+            layout_for_all.setLayoutParams(layoutParam_for_linear);
+
+            layout_for_all.setOrientation(LinearLayout.VERTICAL);
+
+
+            CardView cardView = new CardView(MainActivity.this);
+
+            CardView card_for_radio = new CardView(MainActivity.this);
+
+
+            cardView.setLayoutParams(layoutParam_for_linear);
+
+            card_for_radio.setLayoutParams(layoutParam_for_linear);
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+
+                cardView.setElevation(10);
+
+                cardView.setCardBackgroundColor(getResources().getColor(R.color.colorWhite));
+
+                card_for_radio.setElevation(10);
+
+                card_for_radio.setCardBackgroundColor(getResources().getColor(R.color.colorWhite));
+            }
+
+
+
+
+
+            switch (serveyModel.getType()){
+
+
+
+                case "title":
+
+                    layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 80);
+
+                    LinearLayout heading = new LinearLayout(MainActivity.this);
+
+                    heading.setLayoutParams(layoutParams);
+
+                    heading.setOrientation(LinearLayout.VERTICAL);
+
+                    heading.setGravity(View.TEXT_ALIGNMENT_CENTER);
+
+                    heading.setBackgroundColor(getResources().getColor(R.color.backgrounGreen));
+
+//                    heading.setBackgroundDrawable( getResources().getDrawable(R.drawable.background));
+
+                    LinearLayout.LayoutParams layoutParams_text = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+                    TextView textView = new TextView(MainActivity.this);
+
+                    textView.setLayoutParams(layoutParams_text);
+
+                    textView.setTextColor(getResources().getColor(R.color.colorWhite));
+
+                    textView.setText(serveyModel.getServeyTitle());
+
+                    textView.setGravity(17);
+
+                    textView.setTypeface(null, Typeface.BOLD);
+
+                    textView.setTextSize(25);
+
+                    heading.addView(textView);
+
+                    cardView.addView(heading);
+
+                    parent_layout.addView(cardView);
+
+                    break;
+
+                case "":
+
+
+
+                    ArrayList<RadioButton> radioButtons = new ArrayList<>();
+
+                    ArrayList<CheckBox> checkBoxes = new ArrayList<>();
+
+                    LinearLayout.LayoutParams imageLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+                    imageLayoutParams.setMargins(4,4,4,4);
+
+                    ImageView imageView = new ImageView(MainActivity.this);
+                    imageView.setLayoutParams(imageLayoutParams);
+                    imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+
+                    imageView.setPadding(2,2,2,2);
+
+                    layoutParams.setMargins(8,8,8,8);
+
+
+                    RadioGroup.LayoutParams radioParams = new RadioGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+
+                    radioParams.setMargins(8,8,8,8);
+
+                    final RadioGroup radioGroup = new RadioGroup(MainActivity.this);
+                    radioGroup.setOrientation(LinearLayout.VERTICAL);
+                    radioGroup.setLayoutParams(radioParams);
+                    radioGroup.setGravity(3); // for left
+
+                    LinearLayout linearLayout;
+
+                    LinearLayout linearLayoutChild = new LinearLayout(MainActivity.this);
+
+
+                    linearLayoutChild.setLayoutParams(layoutParams);
+
+                    linearLayoutChild.setOrientation(LinearLayout.VERTICAL);
+
+                    linearLayoutChild.setGravity(3);
+
+                    TextView question_title = new TextView(MainActivity.this);
+
+                    question_title.setTextColor(getResources().getColor(R.color.colorBlack));
+
+                    question_title.setTextSize(20);
+
+                    question_title.setText(serveyModel.getQuestionTitle());
+
+
+
+                    String question_type = serveyModel.getQuestion_type();
+
+                    String answer_type = serveyModel.getAnswer_type();
+
+//                capture = (ImageView) convertView.findViewById(R.id.capture);
+//
+//                capture.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//
+//
+//
+//                        getContext().startActivity(new Intent(getContext(), CameraActivity.class));
+//
+//                    }
+//                });
+
+                    if(question_type.equals("Text")){
+
+//                    linearLayout.addView(textView);
+
+                        if(answer_type.equals("Radio Buttons")){
+
+                            layout_for_all.addView(question_title);
+
+                            layout_for_all.addView(radioGroup);
+//                            parent_layout.addView(question_title);
+
+//                            parent_layout.addView(radioGroup);
+                            try {
+//                            JSONObject options = new JSONObject(reportsPicturesModel.getOptions());
+
+
+
+//                            Log.d("options", "getView: "+options.toString());
+
+                                JSONArray option_array = new JSONArray(serveyModel.getOptions());
+
+                                for (int radio_index=0; radio_index<option_array.length(); radio_index++){
+
+                                    JSONObject val = (JSONObject) option_array.get(radio_index);
+
+                                    LinearLayout parent_radio = new LinearLayout(MainActivity.this);
+
+                                    parent_radio.setOrientation(LinearLayout.VERTICAL);
+
+
+                                    RadioButton radioButton = new RadioButton(MainActivity.this);
+
+                                    radioButton.setId(R.id.radio+radio_index);
+
+                                    LinearLayout.LayoutParams layout_for_radio = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 50);
+
+                                    layout_for_radio.setMargins(8,8,8,8);
+
+
+//                                radioButton.setButtonDrawable(getContext().getResources().getDrawable(R.drawable.custom_radio_button));
+
+
+                                    radioButton.setButtonDrawable(getResources().getDrawable(R.drawable.background_for_radio));
+
+//                                radioButton.setButtonTintList(colorStateList);
+
+
+
+                                    Log.d("radioValue", "getView: "+val.getString("choice"));
+
+                                    radioButton.setText("  "+ val.getString("choice").toUpperCase());
+
+                                    radioButton.setLayoutParams(radioParams);
+
+                                    radioButton.setCompoundDrawablesRelativeWithIntrinsicBounds(0,0,0,0);
+
+                                    radioButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.background));
+
+                                    radioButton.setPadding(8,8,8,8);
+
+                                    radioButton.setTextColor(getResources().getColor(R.color.colorWhite));
+
+                                    radioButton.setTextSize(15);
+
+                                    radioButtons.add(radioButton);
+
+
+
+
+//                                radioButton.setBu
+
+//                                radioButton.setButtonTintList(colorStateList);
+
+
+
+
+                                }
+
+
+
+
+                                for (final RadioButton radioButton : radioButtons){
+
+
+                                    radioButton.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            ServeyModel serveyModel1 = serveyModel;
+
+                                            for (int radio_group_child = 0;radio_group_child<radioGroup.getChildCount();radio_group_child++){
+
+                                                RadioButton r = (RadioButton) radioGroup.getChildAt(radio_group_child);
+
+                                                if(r.isChecked()){
+
+                                                    radioButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.background_after_check));
+
+                                                }
+
+                                            }
+
+                                            if(radioButton.isChecked()){
+
+                                                for_radio.put("servey_key",serveyModel1.getServey_id());
+
+                                                for_radio.put("question_key",serveyModel1.getQuestion_id());
+
+                                                for_radio.put("answer",radioButton.getText());
+
+                                                Log.d("message", "onCheckedChanged: "+String.valueOf(for_radio));
+
+                                                Toast.makeText(MainActivity.this, ""+serveyModel1.getQuestionTitle(), Toast.LENGTH_SHORT).show();
+
+                                                radioButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.background_after_check));
+
+
+
+                                            }else {
+
+                                                for_radio.put("servey_key",serveyModel1.getQuestionTitle());
+
+                                                for_radio.put("question_key",serveyModel1.getServey_id());
+
+                                                for_radio.put("answer",radioButton.getText());
+
+                                                Log.d("message", "onCheckedChanged: "+String.valueOf(for_radio));
+
+                                                Toast.makeText(MainActivity.this, ""+serveyModel1.getQuestionTitle(), Toast.LENGTH_SHORT).show();
+
+                                                radioButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.background));
+
+                                            }
+                                        }
+                                    });
+
+//
+//                                    radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//                                        @Override
+//                                        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//
+//                                            ServeyModel serveyModel1 = serveyModel;
+//
+//                                            for_radio.put("servey_key",serveyModel1.getServey_id());
+//
+//                                            for_radio.put("question_key",serveyModel1.getQuestion_id());
+//
+//                                            for_radio.put("answer",radioButton.getText());
+//
+//                                            Log.d("message", "onCheckedChanged: "+String.valueOf(for_radio));
+//
+//                                            Toast.makeText(MainActivity.this, ""+serveyModel1.getQuestion_id(), Toast.LENGTH_SHORT).show();
+//
+//                                            if(b){
+//
+//
+//                                                radioButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.background_after_check));
+//
+//
+//
+//                                            }else {
+//
+////                                                for_radio.put("servey_key",serveyModel1.getQuestionTitle());
+////
+////                                                for_radio.put("question_key",serveyModel1.getServey_id());
+////
+////                                                for_radio.put("answer",radioButton.getText());
+////
+//                                                radioButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.background));
+//
+////                                                Log.d("message", "onCheckedChanged: "+String.valueOf(for_radio));
+//
+//                                            }
+//
+//                                        }
+//                                    });
+
+//                                    arrayListForCollectData.add(for_radio);
+
+                                    radioGroup.addView(radioButton);
+                                }
+
+                                card_for_radio.addView(layout_for_all);
+//
+                                parent_layout.addView(card_for_radio);
+
+
+
+                            } catch (JSONException e) {
+                                Log.d("error", "getView: "+e);
+                            }
+
+                        }else if(answer_type.equals("Text")){
+
+                            EditText editText = new EditText(MainActivity.this);
+
+                            editText.setLayoutParams(layoutParams);
+
+                            editText.setHint("Feedback Here: ");
+
+                            editText.setHighlightColor(getResources().getColor(R.color.colorMain));
+
+
+
+                            editText.setId(0);
+
+                            editText.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    ServeyModel s =  serveyModel;
+
+                                    Toast.makeText(MainActivity.this, ""+s.getQuestionTitle(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                            layout_for_all.addView(question_title);
+
+                            layout_for_all.addView(editText);
+
+                            cardView.addView(layout_for_all);
+
+                            parent_layout.addView(cardView);
+
+
+
+
+                        }
+                        else if(serveyModel.getAnswer_type().equals("Check Boxes")){
+
+                            layout_for_all.addView(question_title);
+
+
+                            try {
+
+                                JSONArray jsonArray = new JSONArray(serveyModel.getOptions());
+
+                                for (int check_index=0; check_index< jsonArray.length(); check_index++){
+
+                                    JSONObject jsonObject = (JSONObject) jsonArray.get(check_index);
+
+                                    CheckBox checkBox = new CheckBox(MainActivity.this);
+
+                                    LinearLayout.LayoutParams for_check = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 50);
+
+                                    for_check.setMargins(8,8,8,8);
+
+                                    checkBox.setLayoutParams(for_check);
+
+                                    checkBox.setTextColor(getResources().getColor(R.color.colorWhite));
+//                                checkBox.setButtonTintList(colorStateList);
+
+                                    checkBox.setButtonDrawable(getResources().getDrawable(R.drawable.background_for_radio));
+
+                                    checkBox.setBackgroundDrawable(getResources().getDrawable(R.drawable.background));
+
+//                                    checkBox.setButtonDrawable(getResources().getDrawable(R.drawable.colorMain));
+
+                                    checkBox.setId(check_index);
+
+                                    checkBoxes.add(checkBox);
+
+                                    checkBox.setText("  "+jsonObject.getString("choice").toUpperCase());
+                                }
+
+                                for (final CheckBox checkBox: checkBoxes) {
+
+                                    checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                                        @Override
+                                        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+                                            if(b){
+
+                                                checkBox.setBackgroundDrawable(getResources().getDrawable(R.drawable.background_after_check));
+
+                                            }else {
+
+                                                checkBox.setBackgroundDrawable(getResources().getDrawable(R.drawable.background));
+
+                                            }
+
+                                        }
+                                    });
+
+
+                                    layout_for_all.addView(checkBox);
+                                }
+
+
+
+
+
+                                cardView.addView(layout_for_all);
+
+//                                cardView.addView(layout_for_all);
+
+                                parent_layout.addView(cardView);
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+
+
+                        }
+
+
+                    }
+
+                    else if(question_type.equals("Image")){
+
+                        File file = null;
+
+                        try {
+                            file = new File(serveyModel.getImage());
+                        }catch (Exception e){
+                            file = new File("drawable://" + R.drawable.ic_placeholder);
+                        }
+
+                        imageView.setImageURI(Uri.fromFile(file));
+
+//                        parent_layout.addView(question_title);
+//
+//                        parent_layout.addView(imageView);
+
+                        if(serveyModel.getAnswer_type().equals("Check Boxes")){
+
+                            try {
+
+
+
+                                JSONArray jsonArray = new JSONArray(serveyModel.getOptions());
+
+                                for (int check_index=0; check_index< jsonArray.length(); check_index++){
+
+                                    JSONObject jsonObject = (JSONObject) jsonArray.get(check_index);
+
+                                    CheckBox checkBox = new CheckBox(MainActivity.this);
+
+                                    LinearLayout.LayoutParams for_check = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+                                    for_check.setMargins(8,8,8,8);
+
+                                    checkBox.setLayoutParams(for_check);
+
+//                                checkBox.setButtonTintList(colorStateList);
+
+                                    checkBox.setButtonDrawable(getResources().getDrawable(R.drawable.custom_checkbox));
+
+                                    checkBox.setId(check_index);
+
+                                    checkBoxes.add(checkBox);
+
+                                    checkBox.setText("  "+jsonObject.getString("choice"));
+                                }
+
+                                for (final CheckBox checkBox: checkBoxes) {
+
+                                    checkBox.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+
+
+
+                                            Toast.makeText(MainActivity.this, ""+checkBox.getText()+serveyModel.getQuestion_type(), Toast.LENGTH_SHORT).show();
+
+                                        }
+                                    });
+
+                                    linearLayoutChild.addView(checkBox);
+                                }
+
+                                layout_for_all.addView(question_title);
+
+                                layout_for_all.addView(imageView);
+
+                                layout_for_all.addView(linearLayoutChild);
+
+                                cardView.addView(layout_for_all);
+
+                                parent_layout.addView(cardView);
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }else if(serveyModel.getAnswer_type().equals("Text")){
+
+                            EditText editText = new EditText(MainActivity.this);
+
+                            editText.setLayoutParams(layoutParams);
+
+                            editText.setHint("Feedback Here: ");
+
+                            editText.setHighlightColor(getResources().getColor(R.color.colorMain));
+
+                            editText.setId(-1);
+
+                            editText.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    ServeyModel s =  serveyModel;
+
+                                    Toast.makeText(MainActivity.this, ""+s.getQuestionTitle(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                            layout_for_all.addView(question_title);
+
+                            layout_for_all.addView(imageView);
+
+                            layout_for_all.addView(editText);
+
+                            cardView.addView(layout_for_all);
+
+                            parent_layout.addView(cardView);
+
+                        }
+
+                    }else if(serveyModel.getQuestion_type().equals("Text")){
+
+
+
+
+
+
+                    }
+
+            }
+        }
     }
 }

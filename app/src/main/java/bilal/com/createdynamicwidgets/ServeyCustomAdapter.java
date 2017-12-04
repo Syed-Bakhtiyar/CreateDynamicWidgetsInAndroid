@@ -40,6 +40,8 @@ public class ServeyCustomAdapter extends ArrayAdapter<ServeyModel> {
 
     Context context;
 
+    private static final int id_edit_text = 100;
+
     ColorStateList colorStateList = new ColorStateList(
             new int[][]{
                     new int[]{android.R.attr.state_enabled} //enabled
@@ -80,25 +82,35 @@ public class ServeyCustomAdapter extends ArrayAdapter<ServeyModel> {
 
         textView.setText("Hello");
 
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        layoutParams.setMargins(18,18,18,18);
+
+
         RadioGroup radioGroup = new RadioGroup(getContext());
-        radioGroup.setOrientation(LinearLayout.HORIZONTAL);
-        radioGroup.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        radioGroup.setOrientation(LinearLayout.VERTICAL);
+        radioGroup.setLayoutParams(layoutParams);
         radioGroup.setGravity(3 ); // for left
         LinearLayout linearLayout;
 
         LinearLayout linearLayoutChild = new LinearLayout(getContext());
 
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-
-        layoutParams.setMargins(18,18,18,18);
 
         linearLayoutChild.setLayoutParams(layoutParams);
 
-        linearLayoutChild.setOrientation(LinearLayout.HORIZONTAL);
+        linearLayoutChild.setOrientation(LinearLayout.VERTICAL);
 
-        linearLayoutChild.setGravity(17);
+        linearLayoutChild.setGravity(3);
 
+        EditText editText = new EditText(context);
 
+        editText.setLayoutParams(layoutParams);
+
+        editText.setHint("Feedback Here: ");
+
+        editText.setHighlightColor(context.getResources().getColor(R.color.colorMain));
+
+        editText.setId(-1);
 
         ServeyModel reportsPicturesModel = getItem(position);
 
@@ -169,25 +181,46 @@ public class ServeyCustomAdapter extends ArrayAdapter<ServeyModel> {
 
                                 JSONObject val = (JSONObject) option_array.get(i);
 
+                                LinearLayout parent_radio = new LinearLayout(context);
+
+                                parent_radio.setOrientation(LinearLayout.VERTICAL);
+
+
                                 RadioButton radioButton = new RadioButton(getContext());
 
                                 radioButton.setId(R.id.radio+i);
 
-                                radioButtons.add(radioButton);
+                                LinearLayout.LayoutParams layout_for_radio = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
-//                                radioButton.setBu
+                                layout_for_radio.setMargins(8,8,8,8);
 
-                                radioButton.setButtonTintList(colorStateList);
 
-                                radioButton.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+//                                radioButton.setButtonDrawable(getContext().getResources().getDrawable(R.drawable.custom_radio_button));
+
+                                radioButton.setButtonDrawable(getContext().getResources().getDrawable(R.drawable.custom_radio_button));
+
+//                                radioButton.setButtonTintList(colorStateList);
 
                                 radioButton.setHeight(45);
 
                                 Log.d("radioValue", "getView: "+val.getString("choice"));
 
-                                radioButton.setText(val.getString("choice"));
+                                radioButton.setText("  "+val.getString("choice"));
+
+                                radioButton.setLayoutParams(layout_for_radio);
+
+                                radioButtons.add(radioButton);
+
+//                                radioButton.setBu
+
+//                                radioButton.setButtonTintList(colorStateList);
+
+
+
 
                             }
+
 
                             for (final RadioButton radioButton : radioButtons){
 
@@ -209,7 +242,14 @@ public class ServeyCustomAdapter extends ArrayAdapter<ServeyModel> {
                         } catch (JSONException e) {
                             Log.d("error", "getView: "+e);
                         }
+
+                    }else if(answer_type.equals("Text")){
+
+
+
                     }
+
+
 
                 }
 
@@ -239,15 +279,21 @@ public class ServeyCustomAdapter extends ArrayAdapter<ServeyModel> {
 
                                 CheckBox checkBox = new CheckBox(getContext());
 
-                                checkBox.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                                LinearLayout.LayoutParams for_check = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
-                                checkBox.setButtonTintList(colorStateList);
+                                for_check.setMargins(8,8,8,8);
+
+                                checkBox.setLayoutParams(for_check);
+
+//                                checkBox.setButtonTintList(colorStateList);
+
+                                checkBox.setButtonDrawable(getContext().getResources().getDrawable(R.drawable.custom_checkbox));
 
                                 checkBox.setId(i);
 
                                 checkBoxes.add(checkBox);
 
-                                checkBox.setText(jsonObject.getString("choice"));
+                                checkBox.setText("  "+jsonObject.getString("choice"));
                             }
 
                             for (final CheckBox checkBox: checkBoxes) {
