@@ -56,9 +56,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     DBHelper dbHelper;
 
-    private static final String URL = "http://storeperfect.colgate-palmolive.com.pk/offline/index.php/Api/get_survey";
+    //"http://storeperfect.colgate-palmolive.com.pk/offline/index.php/Api/get_survey";
 
-    private static String images_link = "http://storeperfect.colgate-palmolive.com.pk/live/Api/visit_images/";
+    //"http://storeperfect.colgate-palmolive.com.pk/live/Api/visit_images/";
+
+    //http://175.107.206.164
+    private static final String URL = "http://175.107.206.164/offline/index.php/Api/get_survey";
+
+    private static String images_link = "http://175.107.206.164/live/Api/visit_images/";
 
     ProgressDialog progressDialog;
 
@@ -79,6 +84,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     LinearLayout parent_layout;
 
     ArrayList<HashMap<String, Object>> arrayListForCollectData;
+
+    String question_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +116,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     Uri captureImage = CameraActivity.uri;
                     Bitmap thumbnail = CameraActivity.bitmapGlobal;
+
+                    dbHelper.insertAnswer(question_id,captureImage.toString());
+
+                    finish();
+                    startActivity(getIntent());
 
 //                    Uri captureImage = data.getData();
 //                    Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
@@ -152,7 +164,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         arrayList.get(i).getCreated_at(),
                         arrayList.get(i).getOptions(),
                         arrayList.get(i).getImage(),
-                        ""
+                        "",
+                        arrayList.get(i).getTake_image()
                         ));
 
                 title = arrayList.get(i).getServeyTitle();
@@ -167,7 +180,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         arrayList.get(i).getCreated_at(),
                         arrayList.get(i).getOptions(),
                         arrayList.get(i).getImage(),
-                        ""
+                        "",
+                        arrayList.get(i).getTake_image()
                 ));
 
                 title = arrayList.get(i).getServeyTitle();
@@ -219,7 +233,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         progressDialog.show();
 
 
-        asyncHttpClient.setTimeout(7000);
+        asyncHttpClient.setTimeout(120000);
 
         asyncHttpClient.get(MainActivity.this, URL, new AsyncHttpResponseHandler() {
             @Override
@@ -664,12 +678,45 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                         if(answer_type.equals("Radio Buttons")){
 
+                            final ImageView take_picture = new ImageView(MainActivity.this);
+
+                            take_picture.setLayoutParams(imageLayoutParams);
+
                             layout_for_all.addView(question_title);
+
+                            File f = null;
+
+                            try{
+
+                                f = new File(serveyModel.getTake_image());
+
+                            }catch (Exception e){
+
+                                f = new File("drawable://"+R.drawable.ic_camera);
+
+                            }
+
+                            take_picture.setImageURI(Uri.fromFile(f));
+
+                            take_picture.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    final ServeyModel ss = serveyModel;
+
+                                    question_id = ss.getQuestion_id();
+
+                                    startActivityForResult(new Intent(MainActivity.this, CameraActivity.class), REQUEST_CODE_CAPTURE_IMAGE);
+
+                                }
+                            });
 
                             layout_for_all.addView(radioGroup);
 //                            parent_layout.addView(question_title);
 
 //                            parent_layout.addView(radioGroup);
+                            layout_for_all.addView(take_picture);
+
                             try {
 //                            JSONObject options = new JSONObject(reportsPicturesModel.getOptions());
 
@@ -749,16 +796,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                                             ServeyModel serveyModel1 = serveyModel;
 
-//                                            for_radio.put("servey_key",serveyModel1.getServey_id());
-//
-//                                            for_radio.put("question_key",serveyModel1.getQuestionTitle());
-//
-//                                            for_radio.put("answer",radioButton.getText());
-//
-//                                            Log.d("message", "onCheckedChanged: "+String.valueOf(for_radio));
-
-
-
                                             if(compoundButton.isChecked()){
 
                                                 for_radio.put("servey_key",serveyModel1.getServey_id());
@@ -769,6 +806,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                                                 Log.d("message", "onCheckedChanged: "+String.valueOf(for_radio));
 
+                                                JSONObject jsonObject = new JSONObject(for_radio);
+
+                                                dbHelper.insertAnswer(serveyModel.getQuestion_id(),String.valueOf(jsonObject));
 
                                                 radioButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.background_after_check));
 
@@ -819,12 +859,48 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                             editText.setHighlightColor(getResources().getColor(R.color.colorMain));
 
+//                            editText.setId(0);
 
 
-                            editText.setId(0);
+                            final ImageView take_picture = new ImageView(MainActivity.this);
 
+                            take_picture.setLayoutParams(imageLayoutParams);
+
+                            layout_for_all.addView(question_title);
+
+                            File f = null;
+
+                            try{
+
+                                f = new File(serveyModel.getTake_image());
+
+                            }catch (Exception e){
+
+                                f = new File("drawable://"+R.drawable.ic_camera);
+
+                            }
+
+                            take_picture.setImageURI(Uri.fromFile(f));
+
+                            take_picture.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    final ServeyModel ss = serveyModel;
+
+                                    question_id = ss.getQuestion_id();
+
+                                    startActivityForResult(new Intent(MainActivity.this, CameraActivity.class), REQUEST_CODE_CAPTURE_IMAGE);
+
+                                }
+                            });
+
+                            final HashMap<String,Object> for_text = new HashMap<>();
 
                             editText.addTextChangedListener(new TextWatcher() {
+
+                                final ServeyModel serveyModel1 = serveyModel;
+
                                 @Override
                                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -844,22 +920,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                                     Log.d("afterTextChange", "afterTextChanged: "+editText.getText().toString());
 
+                                    for_text.put("servey_key",serveyModel1.getServey_id());
+
+                                    for_text.put("question_key",serveyModel1.getQuestionTitle());
+
+                                    for_text.put("answer",editText.getText().toString().trim());
+
+                                    JSONObject jsonObject = new JSONObject(for_text);
+
+                                    dbHelper.insertAnswer(serveyModel1.getQuestion_id(),String.valueOf(jsonObject));
+
                                 }
                             });
-
-
-//                            editText.setOnClickListener(new View.OnClickListener() {
-//                                @Override
-//                                public void onClick(View view) {
-//                                    ServeyModel s =  serveyModel;
-//
-//                                    Toast.makeText(MainActivity.this, ""+s.getQuestionTitle(), Toast.LENGTH_SHORT).show();
-//                                }
-//                            });
 
                             layout_for_all.addView(question_title);
 
                             layout_for_all.addView(editText);
+
+                            layout_for_all.addView(take_picture);
 
                             cardView.addView(layout_for_all);
 
@@ -873,6 +951,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                             layout_for_all.addView(question_title);
 
+
+                            final ImageView take_picture = new ImageView(MainActivity.this);
+
+                            take_picture.setLayoutParams(imageLayoutParams);
+
+                            layout_for_all.addView(question_title);
+
+                            File f = null;
+
+                            try{
+
+                                f = new File(serveyModel.getTake_image());
+
+                            }catch (Exception e){
+
+                                f = new File("drawable://"+R.drawable.ic_camera);
+
+                            }
+
+                            take_picture.setImageURI(Uri.fromFile(f));
+
+                            take_picture.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                    final ServeyModel ss = serveyModel;
+
+                                    question_id = ss.getQuestion_id();
+
+                                    startActivityForResult(new Intent(MainActivity.this, CameraActivity.class), REQUEST_CODE_CAPTURE_IMAGE);
+
+                                }
+                            });
 
                             try {
 
@@ -906,17 +1017,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     checkBox.setText("  "+jsonObject.getString("choice").toUpperCase());
                                 }
 
-                                for (final CheckBox checkBox: checkBoxes) {
+//                                JSONObject[] jsonObjects = new JSONObject[checkBoxes.size()];
+
+                                for (final CheckBox checkBox : checkBoxes) {
+
+                                    final HashMap<String,Object> for_check = new HashMap<>();
 
                                     checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+                                        final ServeyModel serveyModel1 = serveyModel;
+
                                         @Override
                                         public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
 
-                                            if(b){
+                                            if(compoundButton.isChecked()){
+
+                                                for_check.put("servey_key",serveyModel1.getServey_id());
+
+                                                for_check.put("question_key",serveyModel1.getQuestionTitle());
+
+                                                for_check.put("answer"+checkBox.getId(),checkBox.getText());
+
+                                                JSONObject jsonObject = new JSONObject(for_check);
+
+                                                dbHelper.insertAnswer(serveyModel1.getQuestion_id(),String.valueOf(jsonObject));
 
                                                 checkBox.setBackgroundDrawable(getResources().getDrawable(R.drawable.background_after_check));
 
                                             }else {
+
+                                                for_check.put("servey_key",serveyModel1.getServey_id());
+
+                                                for_check.put("question_key",serveyModel1.getQuestionTitle());
+
+                                                for_check.put("answer"+checkBox.getId(),"");
+
+                                                JSONObject jsonObject = new JSONObject(for_check);
+
+                                                dbHelper.insertAnswer(serveyModel1.getQuestion_id(),String.valueOf(jsonObject));
 
                                                 checkBox.setBackgroundDrawable(getResources().getDrawable(R.drawable.background));
 
@@ -927,6 +1065,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
                                     layout_for_all.addView(checkBox);
+
+                                    layout_for_all.addView(take_picture);
                                 }
 
 
@@ -973,6 +1113,40 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
+
+                                final ImageView take_picture = new ImageView(MainActivity.this);
+
+                                take_picture.setLayoutParams(imageLayoutParams);
+
+                                layout_for_all.addView(question_title);
+
+                                File f = null;
+
+                                try{
+
+                                    f = new File(serveyModel.getTake_image());
+
+                                }catch (Exception e){
+
+                                    f = new File("drawable://"+R.drawable.ic_camera);
+
+                                }
+
+                                take_picture.setImageURI(Uri.fromFile(f));
+
+                                take_picture.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+
+                                        final ServeyModel ss = serveyModel;
+
+                                        question_id = ss.getQuestion_id();
+
+                                        startActivityForResult(new Intent(MainActivity.this, CameraActivity.class), REQUEST_CODE_CAPTURE_IMAGE);
+
+                                    }
+                                });
+
                                 JSONArray jsonArray = new JSONArray(serveyModel.getOptions());
 
                                 for (int check_index=0; check_index< jsonArray.length(); check_index++){
@@ -1000,13 +1174,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                                 for (final CheckBox checkBox: checkBoxes) {
 
-                                    checkBox.setOnClickListener(new View.OnClickListener() {
+                                    final HashMap<String,Object> for_check = new HashMap<>();
+
+                                    checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+                                        final ServeyModel serveyModel1 = serveyModel;
+
                                         @Override
-                                        public void onClick(View view) {
+                                        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                                            if(buttonView.isChecked()){
+
+                                                for_check.put("servey_key",serveyModel1.getServey_id());
+
+                                                for_check.put("question_key",serveyModel1.getQuestionTitle());
+
+                                                for_check.put("answer"+checkBox.getId(),checkBox.getText());
+
+                                                JSONObject jsonObject = new JSONObject(for_check);
+
+                                                dbHelper.insertAnswer(serveyModel1.getQuestion_id(),String.valueOf(jsonObject));
+
+                                                checkBox.setBackgroundDrawable(getResources().getDrawable(R.drawable.background_after_check));
+
+                                            }else {
+
+                                                for_check.put("servey_key",serveyModel1.getServey_id());
+
+                                                for_check.put("question_key",serveyModel1.getQuestionTitle());
+
+                                                for_check.put("answer"+checkBox.getId(),"");
+
+                                                JSONObject jsonObject = new JSONObject(for_check);
+
+                                                dbHelper.insertAnswer(serveyModel1.getQuestion_id(),String.valueOf(jsonObject));
 
 
+                                                checkBox.setBackgroundDrawable(getResources().getDrawable(R.drawable.background));
 
-                                            Toast.makeText(MainActivity.this, ""+checkBox.getText()+serveyModel.getQuestion_type(), Toast.LENGTH_SHORT).show();
+                                            }
+
+
 
                                         }
                                     });
@@ -1020,6 +1228,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                                 layout_for_all.addView(linearLayoutChild);
 
+                                layout_for_all.addView(take_picture);
+
                                 cardView.addView(layout_for_all);
 
                                 parent_layout.addView(cardView);
@@ -1029,7 +1239,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             }
                         }else if(serveyModel.getAnswer_type().equals("Text")){
 
-                            EditText editText = new EditText(MainActivity.this);
+                            final EditText editText = new EditText(MainActivity.this);
 
                             editText.setLayoutParams(layoutParams);
 
@@ -1037,14 +1247,74 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                             editText.setHighlightColor(getResources().getColor(R.color.colorMain));
 
-                            editText.setId(-1);
+//                            editText.setId(-1);
 
-                            editText.setOnClickListener(new View.OnClickListener() {
+
+                            final ImageView take_picture = new ImageView(MainActivity.this);
+
+                            take_picture.setLayoutParams(imageLayoutParams);
+
+                            layout_for_all.addView(question_title);
+
+                            File f = null;
+
+                            try{
+
+                                f = new File(serveyModel.getTake_image());
+
+                            }catch (Exception e){
+
+                                f = new File("drawable://"+R.drawable.ic_camera);
+
+                            }
+
+                            take_picture.setImageURI(Uri.fromFile(f));
+
+                            take_picture.setOnClickListener(new View.OnClickListener() {
                                 @Override
-                                public void onClick(View view) {
-                                    ServeyModel s =  serveyModel;
+                                public void onClick(View v) {
 
-                                    Toast.makeText(MainActivity.this, ""+s.getQuestionTitle(), Toast.LENGTH_SHORT).show();
+                                    final ServeyModel ss = serveyModel;
+
+                                    question_id = ss.getQuestion_id();
+
+                                    startActivityForResult(new Intent(MainActivity.this, CameraActivity.class), REQUEST_CODE_CAPTURE_IMAGE);
+
+                                }
+                            });
+
+
+                            final HashMap<String,Object> for_text = new HashMap<>();
+
+
+                            editText.addTextChangedListener(new TextWatcher() {
+
+                                ServeyModel serveyModel1 = serveyModel;
+
+                                @Override
+                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                                }
+
+                                @Override
+                                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                                }
+
+                                @Override
+                                public void afterTextChanged(Editable s) {
+
+                                    for_text.put("servey_key",serveyModel1.getServey_id());
+
+                                    for_text.put("question_key",serveyModel1.getQuestionTitle());
+
+                                    for_text.put("answer",editText.getText().toString().trim());
+
+                                    JSONObject jsonObject = new JSONObject(for_text);
+
+                                    dbHelper.insertAnswer(serveyModel1.getQuestion_id(),String.valueOf(jsonObject));
+
+
                                 }
                             });
 
@@ -1053,6 +1323,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             layout_for_all.addView(imageView);
 
                             layout_for_all.addView(editText);
+
+                            layout_for_all.addView(take_picture);
 
                             cardView.addView(layout_for_all);
 
@@ -1072,4 +1344,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
     }
+
+
 }

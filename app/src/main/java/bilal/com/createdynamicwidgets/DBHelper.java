@@ -18,7 +18,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public static String DBNAME = "todo.db";
 
-    private static final int version = 1;
+    private static final int version = 3;
 
     private static String SERVEY_TABLE = "survey";
 
@@ -26,7 +26,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static String CREATE_SERVEY_TABLE = "CREATE TABLE IF NOT EXISTS "+SERVEY_TABLE+" (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, server_id TEXT NOT NULL, title TEXT DEFAULT '', publish_date TEXT DEFAULT '', expiry_date TEXT DEFAULT '', created_at TEXT DEFAULT '', status TEXT DEFAULT  '',visit_id TEXT DEFAULT '', sync TEXT DEFAULT 'YES')";
 
-    private static String CREATE_SURVEY_QUESTION = "CREATE TABLE IF NOT EXISTS "+QUESTION_TABLE+" (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,server_id TEXT NOT NULL, servey_table_id TEXT NOT NULL,question_title TEXT NOT NULL, question_type TEXT NOT NULL, answer_type TEXT NOT NULL, question_image TEXT DEFAULT '', options TEXT NOT NULL,answer TEXT DEFAULT '',visit_id TEXT DEFAULT '', sync TEXT DEFAULT 'YES')";
+    private static String CREATE_SURVEY_QUESTION = "CREATE TABLE IF NOT EXISTS "+QUESTION_TABLE+" (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,server_id TEXT NOT NULL, servey_table_id TEXT NOT NULL,question_title TEXT NOT NULL, question_type TEXT NOT NULL, answer_type TEXT NOT NULL, question_image TEXT DEFAULT '', options TEXT NOT NULL,answer TEXT DEFAULT '',answer_image TEXT DEFAULT '',visit_id TEXT DEFAULT '', sync TEXT DEFAULT 'YES')";
 
     private static String TAG = "application";
 
@@ -123,7 +123,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = getWritableDatabase();
 
-        String query = "SELECT s.server_id, s.title, s.created_at, sq.server_id, sq.question_title, sq.question_type, sq.answer_type, sq.question_image,sq.options from "+SERVEY_TABLE+" s " +
+        String query = "SELECT s.server_id, s.title, s.created_at, sq.server_id, sq.question_title, sq.question_type, sq.answer_type, sq.question_image,sq.options, sq.id, sq.answer_image from "+SERVEY_TABLE+" s " +
                 "inner join "+QUESTION_TABLE+" sq on s.server_id = sq.servey_table_id";
 
         int q_num = 1;
@@ -137,13 +137,14 @@ public class DBHelper extends SQLiteOpenHelper {
                         cursor.getString(1),
                         q_num+": "+cursor.getString(4),
                         cursor.getString(0),
-                        "",
+                        cursor.getString(9),
                         cursor.getString(5),
                         cursor.getString(6),
                         cursor.getString(2),
                         cursor.getString(8),
                         cursor.getString(7),
-                        ""
+                        "",
+                        cursor.getString(10)
                 ));
 
                 q_num += 1;
@@ -157,5 +158,28 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
+    public void insertAnswer(String id, String answer){
+
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put("answer",answer);
+
+        long flag = db.update(QUESTION_TABLE,contentValues,"id = "+id,null);
+
+        if(flag == -1){
+
+            Log.d(TAG, "notinsertAnswer: "+answer);
+
+        }else {
+
+            Log.d(TAG, "insertAnswer: "+answer);
+
+        }
+
+
+
+    }
 
 }

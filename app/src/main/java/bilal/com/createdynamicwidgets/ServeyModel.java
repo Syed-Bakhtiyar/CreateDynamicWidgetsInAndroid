@@ -28,7 +28,7 @@ public class ServeyModel {
 
     String take_image = "";
 
-    public ServeyModel(String serveyTitle, String questionTitle, String servey_id, String question_id, String question_type, String answer_type, String created_at, String options,String image,String type) {
+    public ServeyModel(String serveyTitle, String questionTitle, String servey_id, String question_id, String question_type, String answer_type, String created_at, String options,String image,String type,String take_image) {
         ServeyTitle = serveyTitle;
         QuestionTitle = questionTitle;
         this.servey_id = servey_id;
@@ -39,6 +39,8 @@ public class ServeyModel {
         this.options = options;
         this.image = image;
         this.type = type;
+        this.take_image = take_image;
+
     }
 
 
@@ -46,6 +48,8 @@ public class ServeyModel {
         ServeyTitle = serveyTitle;
         this.type = type;
     }
+
+
 
     public String getType() {
         return type;
