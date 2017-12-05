@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="REPORT SUMMARY"
+            android:text="Survey Report"
             android:textColor="@color/colorWhite"
             android:textSize="21sp" />
 
@@ -45,38 +45,42 @@
             android:padding="20dp" />
 
     </RelativeLayout>
-<!--<Button-->
+    <!--<Button-->
     <!--android:id="@+id/temp"-->
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="50dp" />-->
-    
+
     <!--<android.support.v7.widget.CardView-->
-        <!--android:layout_margin="8dp"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
+    <!--android:layout_margin="8dp"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
 
-        <!--app:cardElevation="10dp">-->
+    <!--app:cardElevation="10dp">-->
 
-        <ScrollView
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="8dp">
+            android:orientation="vertical">
 
             <LinearLayout
-                android:background="@android:color/transparent"
                 android:id="@+id/parent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
+                android:background="@android:color/transparent"
                 android:orientation="vertical">
 
                 <!--<TextView-->
-                    <!--android:id="@+id/question_title"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_margin="8dp"-->
-                    <!--android:textColor="@color/colorBlack"-->
-                    <!--android:textSize="25sp" />-->
+                <!--android:id="@+id/question_title"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_margin="8dp"-->
+                <!--android:textColor="@color/colorBlack"-->
+                <!--android:textSize="25sp" />-->
 
                 <!--<TextView-->
                 <!--android:layout_margin="8dp"-->
@@ -89,19 +93,19 @@
                 <!--android:textStyle="bold" />-->
 
                 <!--<LinearLayout-->
-                    <!--android:id="@+id/parent"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:layout_margin="8dp"-->
-                    <!--android:gravity="center_horizontal"-->
-                    <!--android:orientation="vertical"></LinearLayout>-->
+                <!--android:id="@+id/parent"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_margin="8dp"-->
+                <!--android:gravity="center_horizontal"-->
+                <!--android:orientation="vertical"></LinearLayout>-->
 
 
                 <!--<TextView-->
-                    <!--android:id="@+id/created_at"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:textSize="20sp" />-->
+                <!--android:id="@+id/created_at"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:textSize="20sp" />-->
 
 
                 <!--&lt;!&ndash;<ImageView&ndash;&gt;-->
@@ -115,17 +119,31 @@
                 <!--&lt;!&ndash;android:background="@drawable/ic_camera"/>&ndash;&gt;-->
 
                 <!--<LinearLayout-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="0.5dp"-->
-                    <!--android:background="@color/drawer_background_color"></LinearLayout>-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="0.5dp"-->
+                <!--android:background="@color/drawer_background_color"></LinearLayout>-->
 
                 <!--<ImageView-->
                 <!--android:id="@+id/capture"-->
                 <!--android:layout_width="match_parent"-->
                 <!--android:layout_height="200dp"-->
                 <!--android:background="@drawable/ic_camera"/>-->
+
             </LinearLayout>
-        </ScrollView>
+
+            <com.spark.submitbutton.SubmitButton
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:id="@+id/submit"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="Submit"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                app:sub_btn_duration="2000" />
+
+        </LinearLayout>
+    </ScrollView>
     <!--</android.support.v7.widget.CardView>-->
 
     <!--<ListView-->

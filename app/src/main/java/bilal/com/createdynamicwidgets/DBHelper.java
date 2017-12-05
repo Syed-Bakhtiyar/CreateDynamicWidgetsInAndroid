@@ -182,4 +182,50 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
+    public void insertImage(String id, String image){
+
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put("answer_image",image);
+
+        long flag = db.update(QUESTION_TABLE,contentValues,"id = "+id,null);
+
+        if(flag == -1){
+
+            Log.d(TAG, "notinsertAnswer: "+image);
+
+        }else {
+
+            Log.d(TAG, "insertAnswer: "+image);
+
+        }
+
+
+
+    }
+
+    public void updateSyncStatus(){
+
+        SQLiteDatabase db = getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+
+        contentValues.put("sync","NO");
+
+        long flag =  db.update(QUESTION_TABLE,contentValues,null,null);
+
+        if(flag == -1){
+
+            Log.d(TAG, "NotupdateSubmitStatus: ");
+
+        }else {
+
+            Log.d(TAG, "UpdateSubmitStatus: ");
+
+        }
+
+    }
+
 }

@@ -31,7 +31,9 @@ import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.spark.submitbutton.SubmitButton;
 
+import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,7 +48,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import cz.msebera.android.httpclient.Header;
+//import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -56,7 +58,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     DBHelper dbHelper;
 
+    SubmitButton submitButton;
+
     //"http://storeperfect.colgate-palmolive.com.pk/offline/index.php/Api/get_survey";
+
 
     //"http://storeperfect.colgate-palmolive.com.pk/live/Api/visit_images/";
 
@@ -117,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     Uri captureImage = CameraActivity.uri;
                     Bitmap thumbnail = CameraActivity.bitmapGlobal;
 
-                    dbHelper.insertAnswer(question_id,captureImage.toString());
+                    dbHelper.insertImage(question_id,captureImage.toString());
 
                     finish();
                     startActivity(getIntent());
@@ -206,7 +211,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         button_sync_data = (ImageView) findViewById(R.id.button_sync_data);
 
+        submitButton = (SubmitButton) findViewById(R.id.submit);
+
         button_sync_data.setOnClickListener(this);
+
+        submitButton.setOnClickListener(this);
 
         functionCreateWidgets();
     }
@@ -223,6 +232,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             break;
 
+            case R.id.submit:
+
+
+                dbHelper.updateSyncStatus();
+
+
+                backUpDB();
+
+                break;
 
         }
 
@@ -232,42 +250,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         progressDialog.show();
 
+//
+
+
+
+
 
         asyncHttpClient.setTimeout(120000);
 
-        asyncHttpClient.get(MainActivity.this, URL, new AsyncHttpResponseHandler() {
+        asyncHttpClient.get("http://175.107.206.164/offline/index.php/Api/get_survey", new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
 
-                String response = new String(responseBody);
 
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
+                    String response = new String(responseBody);
 
-                    int error = jsonObject.getInt("error");
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
 
-                    if(error == -1){
+                        int error = jsonObject.getInt("error");
 
-                        progressDialog.dismiss();
+                        if(error == -1){
 
-                        new SavingInLocalStorage().execute(jsonObject);
+                            progressDialog.dismiss();
 
+                            new SavingInLocalStorage().execute(jsonObject);
+
+                        }
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
 
 
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
-                Log.d("serverFail", "onFailure: ");
-
-                progressDialog.dismiss();
 
             }
         });
@@ -686,17 +706,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                             File f = null;
 
-                            try{
+//                            take_picture.setImageDrawable(getDrawable(R.drawable.ic_camera));
+
+
 
                                 f = new File(serveyModel.getTake_image());
 
-                            }catch (Exception e){
+                                if(f.exists()){
 
-                                f = new File("drawable://"+R.drawable.ic_camera);
+                                    take_picture.setImageURI(Uri.fromFile(f));
 
-                            }
 
-                            take_picture.setImageURI(Uri.fromFile(f));
+                                }else {
+
+                                    take_picture.setImageDrawable(getDrawable(R.drawable.ic_camera));
+
+                                }
 
                             take_picture.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -712,9 +737,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             });
 
                             layout_for_all.addView(radioGroup);
-//                            parent_layout.addView(question_title);
-
-//                            parent_layout.addView(radioGroup);
                             layout_for_all.addView(take_picture);
 
                             try {
@@ -835,13 +857,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                                     radioGroup.addView(radioButton);
 
-                                    arrayListForCollectData.add(for_radio);
+//                                    arrayListForCollectData.add(for_radio);
 
                                 }
 
-                                card_for_radio.addView(layout_for_all);
+                                cardView.addView(layout_for_all);
 //
-                                parent_layout.addView(card_for_radio);
+                                parent_layout.addView(cardView);
 
 
 
@@ -870,17 +892,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                             File f = null;
 
-                            try{
+//                            take_picture.setImageDrawable(getDrawable(R.drawable.ic_camera));
 
-                                f = new File(serveyModel.getTake_image());
 
-                            }catch (Exception e){
 
-                                f = new File("drawable://"+R.drawable.ic_camera);
+                            f = new File(serveyModel.getTake_image());
+
+                            if(f.exists()){
+
+                                take_picture.setImageURI(Uri.fromFile(f));
+
+
+                            }else {
+
+                                take_picture.setImageDrawable(getDrawable(R.drawable.ic_camera));
 
                             }
-
-                            take_picture.setImageURI(Uri.fromFile(f));
 
                             take_picture.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -933,7 +960,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 }
                             });
 
-                            layout_for_all.addView(question_title);
+//                            layout_for_all.addView(question_title);
 
                             layout_for_all.addView(editText);
 
@@ -956,21 +983,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                             take_picture.setLayoutParams(imageLayoutParams);
 
-                            layout_for_all.addView(question_title);
+//                            layout_for_all.addView(question_title);
 
                             File f = null;
 
-                            try{
+//                            take_picture.setImageDrawable(getDrawable(R.drawable.ic_camera));
 
-                                f = new File(serveyModel.getTake_image());
 
-                            }catch (Exception e){
 
-                                f = new File("drawable://"+R.drawable.ic_camera);
+                            f = new File(serveyModel.getTake_image());
+
+                            if(f.exists()){
+
+                                take_picture.setImageURI(Uri.fromFile(f));
+
+
+                            }else {
+
+                                take_picture.setImageDrawable(getDrawable(R.drawable.ic_camera));
 
                             }
-
-                            take_picture.setImageURI(Uri.fromFile(f));
 
                             take_picture.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -1019,9 +1051,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 //                                JSONObject[] jsonObjects = new JSONObject[checkBoxes.size()];
 
+                                final HashMap<String,Object> for_check = new HashMap<>();
+
+
                                 for (final CheckBox checkBox : checkBoxes) {
 
-                                    final HashMap<String,Object> for_check = new HashMap<>();
 
                                     checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
@@ -1066,10 +1100,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                                     layout_for_all.addView(checkBox);
 
-                                    layout_for_all.addView(take_picture);
+
                                 }
 
 
+                                layout_for_all.addView(take_picture);
 
 
 
@@ -1122,17 +1157,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                                 File f = null;
 
-                                try{
+//                            take_picture.setImageDrawable(getDrawable(R.drawable.ic_camera));
 
-                                    f = new File(serveyModel.getTake_image());
 
-                                }catch (Exception e){
 
-                                    f = new File("drawable://"+R.drawable.ic_camera);
+                                f = new File(serveyModel.getTake_image());
+
+                                if(f.exists()){
+
+                                    take_picture.setImageURI(Uri.fromFile(f));
+
+
+                                }else {
+
+                                    take_picture.setImageDrawable(getDrawable(R.drawable.ic_camera));
 
                                 }
 
-                                take_picture.setImageURI(Uri.fromFile(f));
+
 
                                 take_picture.setOnClickListener(new View.OnClickListener() {
                                     @Override
@@ -1172,9 +1214,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     checkBox.setText("  "+jsonObject.getString("choice"));
                                 }
 
+                                final HashMap<String,Object> for_check = new HashMap<>();
+
                                 for (final CheckBox checkBox: checkBoxes) {
 
-                                    final HashMap<String,Object> for_check = new HashMap<>();
+
 
                                     checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
@@ -1258,17 +1302,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                             File f = null;
 
-                            try{
+//                            take_picture.setImageDrawable(getDrawable(R.drawable.ic_camera));
 
-                                f = new File(serveyModel.getTake_image());
 
-                            }catch (Exception e){
 
-                                f = new File("drawable://"+R.drawable.ic_camera);
+                            f = new File(serveyModel.getTake_image());
+
+                            if(f.exists()){
+
+                                take_picture.setImageURI(Uri.fromFile(f));
+
+
+                            }else {
+
+                                take_picture.setImageDrawable(getDrawable(R.drawable.ic_camera));
 
                             }
 
-                            take_picture.setImageURI(Uri.fromFile(f));
 
                             take_picture.setOnClickListener(new View.OnClickListener() {
                                 @Override
@@ -1318,7 +1368,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 }
                             });
 
-                            layout_for_all.addView(question_title);
+//                            layout_for_all.addView(question_title);
 
                             layout_for_all.addView(imageView);
 
