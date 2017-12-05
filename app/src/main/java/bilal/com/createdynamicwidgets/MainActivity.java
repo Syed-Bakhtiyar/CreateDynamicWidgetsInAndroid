@@ -618,6 +618,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     heading.addView(textView);
 
+                    LinearLayout under_line = new LinearLayout(this);
+
+                    under_line.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+                    under_line.setBackgroundColor(getResources().getColor(R.color.colorBlack));
+
+                    heading.addView(under_line);
+
                     cardView.addView(heading);
 
                     parent_layout.addView(cardView);
