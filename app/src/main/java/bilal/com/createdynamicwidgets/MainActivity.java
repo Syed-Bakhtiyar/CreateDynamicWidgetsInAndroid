@@ -13,6 +13,8 @@ import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -498,8 +500,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void functionCreateWidgets(){
 
-        final HashMap<String,Object> for_radio = new HashMap<>();
-
 //        HashMap<String,Object> hashMap = new HashMap<>();
 
         for(final ServeyModel serveyModel :array_list){
@@ -562,7 +562,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     heading.setGravity(View.TEXT_ALIGNMENT_CENTER);
 
-                    heading.setBackgroundColor(getResources().getColor(R.color.backgrounGreen));
+                    heading.setBackgroundColor(getResources().getColor(R.color.Green));
 
 //                    heading.setBackgroundDrawable( getResources().getDrawable(R.drawable.background));
 
@@ -615,7 +615,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     radioParams.setMargins(8,8,8,8);
 
-                    final RadioGroup radioGroup = new RadioGroup(MainActivity.this);
+                    RadioGroup radioGroup = new RadioGroup(MainActivity.this);
                     radioGroup.setOrientation(LinearLayout.VERTICAL);
                     radioGroup.setLayoutParams(radioParams);
                     radioGroup.setGravity(3); // for left
@@ -737,39 +737,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 }
 
 
-
-
                                 for (final RadioButton radioButton : radioButtons){
 
 
-                                    radioButton.setOnClickListener(new View.OnClickListener() {
+                                    final HashMap<String,Object> for_radio = new HashMap<>();
+
+                                    radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                                         @Override
-                                        public void onClick(View v) {
+                                        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+
+
                                             ServeyModel serveyModel1 = serveyModel;
 
-                                            for (int radio_group_child = 0;radio_group_child<radioGroup.getChildCount();radio_group_child++){
+//                                            for_radio.put("servey_key",serveyModel1.getServey_id());
+//
+//                                            for_radio.put("question_key",serveyModel1.getQuestionTitle());
+//
+//                                            for_radio.put("answer",radioButton.getText());
+//
+//                                            Log.d("message", "onCheckedChanged: "+String.valueOf(for_radio));
 
-                                                RadioButton r = (RadioButton) radioGroup.getChildAt(radio_group_child);
 
-                                                if(r.isChecked()){
 
-                                                    radioButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.background_after_check));
-
-                                                }
-
-                                            }
-
-                                            if(radioButton.isChecked()){
+                                            if(compoundButton.isChecked()){
 
                                                 for_radio.put("servey_key",serveyModel1.getServey_id());
 
-                                                for_radio.put("question_key",serveyModel1.getQuestion_id());
+                                                for_radio.put("question_key",serveyModel1.getQuestionTitle());
 
                                                 for_radio.put("answer",radioButton.getText());
 
                                                 Log.d("message", "onCheckedChanged: "+String.valueOf(for_radio));
 
-                                                Toast.makeText(MainActivity.this, ""+serveyModel1.getQuestionTitle(), Toast.LENGTH_SHORT).show();
 
                                                 radioButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.background_after_check));
 
@@ -777,66 +776,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                                             }else {
 
-                                                for_radio.put("servey_key",serveyModel1.getQuestionTitle());
-
-                                                for_radio.put("question_key",serveyModel1.getServey_id());
-
-                                                for_radio.put("answer",radioButton.getText());
-
-                                                Log.d("message", "onCheckedChanged: "+String.valueOf(for_radio));
-
-                                                Toast.makeText(MainActivity.this, ""+serveyModel1.getQuestionTitle(), Toast.LENGTH_SHORT).show();
-
+//                                                for_radio.put("servey_key",serveyModel1.getQuestionTitle());
+//
+//                                                for_radio.put("question_key",serveyModel1.getServey_id());
+//
+//                                                for_radio.put("answer",radioButton.getText());
+//
                                                 radioButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.background));
 
+//                                                Log.d("message", "onCheckedChanged: "+String.valueOf(for_radio));
+
                                             }
+
                                         }
                                     });
-
-//
-//                                    radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//                                        @Override
-//                                        public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//
-//                                            ServeyModel serveyModel1 = serveyModel;
-//
-//                                            for_radio.put("servey_key",serveyModel1.getServey_id());
-//
-//                                            for_radio.put("question_key",serveyModel1.getQuestion_id());
-//
-//                                            for_radio.put("answer",radioButton.getText());
-//
-//                                            Log.d("message", "onCheckedChanged: "+String.valueOf(for_radio));
-//
-//                                            Toast.makeText(MainActivity.this, ""+serveyModel1.getQuestion_id(), Toast.LENGTH_SHORT).show();
-//
-//                                            if(b){
-//
-//
-//                                                radioButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.background_after_check));
-//
-//
-//
-//                                            }else {
-//
-////                                                for_radio.put("servey_key",serveyModel1.getQuestionTitle());
-////
-////                                                for_radio.put("question_key",serveyModel1.getServey_id());
-////
-////                                                for_radio.put("answer",radioButton.getText());
-////
-//                                                radioButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.background));
-//
-////                                                Log.d("message", "onCheckedChanged: "+String.valueOf(for_radio));
-//
-//                                            }
-//
-//                                        }
-//                                    });
 
 //                                    arrayListForCollectData.add(for_radio);
 
                                     radioGroup.addView(radioButton);
+
+                                    arrayListForCollectData.add(for_radio);
+
                                 }
 
                                 card_for_radio.addView(layout_for_all);
@@ -851,7 +811,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                         }else if(answer_type.equals("Text")){
 
-                            EditText editText = new EditText(MainActivity.this);
+                            final EditText editText = new EditText(MainActivity.this);
 
                             editText.setLayoutParams(layoutParams);
 
@@ -863,14 +823,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                             editText.setId(0);
 
-                            editText.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-                                    ServeyModel s =  serveyModel;
 
-                                    Toast.makeText(MainActivity.this, ""+s.getQuestionTitle(), Toast.LENGTH_SHORT).show();
+                            editText.addTextChangedListener(new TextWatcher() {
+                                @Override
+                                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                                    Log.d("beforeText", "afterTextChanged: "+editText.getText().toString());
+
+                                }
+
+                                @Override
+                                public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                                    Log.d("OnTextChange", "afterTextChanged: "+editText.getText().toString());
+
+                                }
+
+                                @Override
+                                public void afterTextChanged(Editable s) {
+
+                                    Log.d("afterTextChange", "afterTextChanged: "+editText.getText().toString());
+
                                 }
                             });
+
+
+//                            editText.setOnClickListener(new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View view) {
+//                                    ServeyModel s =  serveyModel;
+//
+//                                    Toast.makeText(MainActivity.this, ""+s.getQuestionTitle(), Toast.LENGTH_SHORT).show();
+//                                }
+//                            });
 
                             layout_for_all.addView(question_title);
 
