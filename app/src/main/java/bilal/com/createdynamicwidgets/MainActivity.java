@@ -48,6 +48,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import bilal.com.createdynamicwidgets.CustomFonts.BoldCustomTextView;
+import bilal.com.createdynamicwidgets.CustomFonts.RegularCustomTextView;
+
 //import cz.msebera.android.httpclient.Header;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -239,6 +242,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
                 backUpDB();
+
+
 
                 break;
 
@@ -596,13 +601,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     heading.setGravity(View.TEXT_ALIGNMENT_CENTER);
 
-                    heading.setBackgroundColor(getResources().getColor(R.color.Green));
+                    heading.setBackgroundColor(getResources().getColor(R.color.colorBlack));
 
 //                    heading.setBackgroundDrawable( getResources().getDrawable(R.drawable.background));
 
                     LinearLayout.LayoutParams layoutParams_text = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
-                    TextView textView = new TextView(MainActivity.this);
+                    BoldCustomTextView textView = new BoldCustomTextView(MainActivity.this);
 
                     textView.setLayoutParams(layoutParams_text);
 
@@ -673,7 +678,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     linearLayoutChild.setGravity(3);
 
-                    TextView question_title = new TextView(MainActivity.this);
+                    RegularCustomTextView question_title = new RegularCustomTextView(MainActivity.this);
 
                     question_title.setTextColor(getResources().getColor(R.color.colorBlack));
 
