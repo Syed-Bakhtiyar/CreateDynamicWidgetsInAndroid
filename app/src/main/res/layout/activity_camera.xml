@@ -1,148 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-tools:context="bilal.com.createdynamicwidgets.CameraActivity">
-
-<RelativeLayout
-    android:id="@+id/toplayout"
-    android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:background="@color/colorMain">
-
-    <ImageView
-        android:id="@+id/button_back"
-        android:layout_width="30dp"
-        android:layout_height="27dp"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="10dp"
-        android:background="@drawable/ic_back_arrow" />
-
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="SHOP DETAILS"
-        android:textColor="@color/colorWhite"
-        android:textSize="21sp" />
-
-
-</RelativeLayout>
-
-<FrameLayout
-    android:id="@+id/camera_frame"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_below="@+id/toplayout">
+    tools:context="bilal.com.createdynamicwidgets.CameraActivity">
 
-    <ImageView
-        android:id="@+id/camera_image_view"
+    <RelativeLayout
+        android:id="@+id/toplayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-    <!--preview_view-->
-    <SurfaceView
-        android:id="@+id/preview_view"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
-
-
-</FrameLayout>
-
-
-<RelativeLayout
-
-    android:id="@+id/bottomLayout"
-    android:layout_width="match_parent"
-    android:layout_height="72dp"
-    android:layout_alignParentBottom="true"
-    android:background="#88000000">
-
-    <LinearLayout
-        android:layout_margin="8dp"
-        android:background="@drawable/background_radius_tab"
-        android:id="@+id/reset"
-        android:gravity="center_horizontal"
-        android:padding="8dp"
-        android:scaleType="fitCenter"
-        android:layout_centerVertical="true"
-        android:layout_width="170sp"
-        android:layout_height="match_parent">
+        android:layout_height="50dp"
+        android:background="@color/colorMain">
 
         <ImageView
-            android:layout_gravity="center"
-            android:padding="8dp"
-            android:scaleType="fitCenter"
-
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:id="@+id/button_back"
+            android:layout_width="30dp"
+            android:layout_height="27dp"
             android:layout_centerVertical="true"
-            android:layout_margin="5dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/ic_back_arrow" />
 
-            android:src="@drawable/clear_button" />
-
-
-    </LinearLayout>
-
-
-    <ImageView
-        android:id="@+id/capture_image_button"
-        android:layout_width="112dp"
-        android:layout_height="48dp"
-        android:layout_centerInParent="true"
-        android:background="@drawable/camera_button_2"
-        android:scaleType="centerCrop"
-        android:text="SHOP DETAILS"
-        android:textSize="21sp" />
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="SHOP DETAILS"
+            android:textColor="@color/colorWhite"
+            android:textSize="21sp" />
 
 
-    <!---->
-    <LinearLayout
-        android:layout_margin="8dp"
-        android:background="@drawable/background_radius_tab"
-        android:id="@+id/done"
-        android:outlineProvider="bounds"
-        android:layout_alignParentRight="true"
-        android:gravity="center_horizontal"
-        android:padding="8dp"
-        android:scaleType="fitCenter"
-        android:layout_centerVertical="true"
-        android:layout_width="170sp"
-        android:layout_height="match_parent">
+    </RelativeLayout>
+
+
+
+    <FrameLayout
+        android:id="@+id/camera_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toplayout">
 
         <ImageView
-            android:padding="6dp"
+            android:id="@+id/camera_image_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <!--preview_view-->
+        <SurfaceView
+            android:id="@+id/preview_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
 
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+
+    </FrameLayout>
+
+
+    <RelativeLayout
+
+        android:id="@+id/bottomLayout"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:layout_alignParentBottom="true"
+        android:background="#88000000">
+
+        <LinearLayout
+            android:id="@+id/reset"
+            android:layout_width="170sp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_margin="8dp"
+            android:background="@drawable/background_radius_tab"
+            android:gravity="center_horizontal"
+            android:padding="8dp"
+            android:scaleType="fitCenter">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:padding="8dp"
+                android:scaleType="fitCenter"
+
+                android:src="@drawable/clear_button" />
+
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/capture_image_button"
+            android:layout_width="112dp"
+            android:layout_height="48dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/camera_button_2"
+            android:scaleType="centerCrop"
+            android:text="SHOP DETAILS"
+            android:textSize="21sp" />
+
+
+        <!---->
+        <LinearLayout
+            android:id="@+id/done"
+            android:layout_width="170sp"
+            android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_margin="8dp"
+            android:background="@drawable/background_radius_tab"
+            android:gravity="center_horizontal"
+            android:outlineProvider="bounds"
+            android:padding="8dp"
+            android:scaleType="fitCenter">
 
-            android:src="@drawable/check_symbol"
+            <ImageView
+                android:layout_width="40dp"
 
-            />
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:padding="6dp"
 
+                android:src="@drawable/check_symbol"
 
-    </LinearLayout>
-
-
-
-    <!---->
-    <!--<TextView-->
-    <!--android:id="@+id/check"-->
-    <!--android:textSize="25sp"-->
-    <!--android:gravity="center"-->
-    <!--android:textColor="#fff"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:text="Saving..." />-->
+                />
 
 
-</RelativeLayout>
+        </LinearLayout>
 
+
+        <!---->
+        <!--<TextView-->
+        <!--android:id="@+id/check"-->
+        <!--android:textSize="25sp"-->
+        <!--android:gravity="center"-->
+        <!--android:textColor="#fff"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:text="Saving..." />-->
+
+
+    </RelativeLayout>
+
+    <ImageView
+        android:scaleType="centerInside"
+        android:background="#fff"
+        android:src="@drawable/flash"
+        android:layout_margin="8dp"
+        android:layout_alignParentRight="true"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_below="@+id/toplayout"/>
 
 </RelativeLayout>
 
