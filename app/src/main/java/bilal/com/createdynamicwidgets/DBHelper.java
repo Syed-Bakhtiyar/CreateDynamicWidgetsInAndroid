@@ -24,9 +24,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static String QUESTION_TABLE = "survey_question";
 
-    private static String CREATE_SERVEY_TABLE = "CREATE TABLE IF NOT EXISTS "+SERVEY_TABLE+" (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, server_id TEXT NOT NULL, title TEXT DEFAULT '', publish_date TEXT DEFAULT '', expiry_date TEXT DEFAULT '', created_at TEXT DEFAULT '', status TEXT DEFAULT  '',visit_id TEXT DEFAULT '', sync TEXT DEFAULT 'YES')";
+    private static String CREATE_SERVEY_TABLE = "CREATE TABLE IF NOT EXISTS "+SERVEY_TABLE+" (id_for_report_summary INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, server_id TEXT NOT NULL, title TEXT DEFAULT '', publish_date TEXT DEFAULT '', expiry_date TEXT DEFAULT '', created_at TEXT DEFAULT '', status TEXT DEFAULT  '',visit_id TEXT DEFAULT '', sync TEXT DEFAULT 'YES')";
 
-    private static String CREATE_SURVEY_QUESTION = "CREATE TABLE IF NOT EXISTS "+QUESTION_TABLE+" (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,server_id TEXT NOT NULL, servey_table_id TEXT NOT NULL,question_title TEXT NOT NULL, question_type TEXT NOT NULL, answer_type TEXT NOT NULL, question_image TEXT DEFAULT '', options TEXT NOT NULL,answer TEXT DEFAULT '',answer_image TEXT DEFAULT '',visit_id TEXT DEFAULT '', sync TEXT DEFAULT 'YES')";
+    private static String CREATE_SURVEY_QUESTION = "CREATE TABLE IF NOT EXISTS "+QUESTION_TABLE+" (id_for_report_summary INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,server_id TEXT NOT NULL, servey_table_id TEXT NOT NULL,question_title TEXT NOT NULL, question_type TEXT NOT NULL, answer_type TEXT NOT NULL, question_image TEXT DEFAULT '', options TEXT NOT NULL,answer TEXT DEFAULT '',answer_image TEXT DEFAULT '',visit_id TEXT DEFAULT '', sync TEXT DEFAULT 'YES')";
 
     private static String TAG = "application";
 

@@ -148,7 +148,7 @@ public class ServeyCustomAdapter extends ArrayAdapter<ServeyModel> {
 
                 String answer_type = reportsPicturesModel.getAnswer_type();
 
-//                capture = (ImageView) convertView.findViewById(R.id.capture);
+//                capture = (ImageView) convertView.findViewById(R.id_for_report_summary.capture);
 //
 //                capture.setOnClickListener(new View.OnClickListener() {
 //                    @Override

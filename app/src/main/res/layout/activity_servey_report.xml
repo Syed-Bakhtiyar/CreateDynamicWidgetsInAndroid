@@ -7,7 +7,7 @@
     android:background="@color/grayGrad"
     android:orientation="vertical"
 
-    tools:context="bilal.com.createdynamicwidgets.MainActivity">
+    tools:context="bilal.com.createdynamicwidgets.ServeyReportActivity">
 
     <!--android:background="@color/colorLightWhite"-->
     <RelativeLayout
@@ -46,7 +46,7 @@
 
     </RelativeLayout>
     <!--<Button-->
-    <!--android:id="@+id/temp"-->
+    <!--andrid_for_report_summaryd:idid_for_report_summary@+id/temp"-->
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="50dp" />-->
 
@@ -75,7 +75,7 @@
                 android:orientation="vertical">
 
                 <!--<TextView-->
-                <!--android:id="@+id/question_title"-->
+                <!--andrid_for_report_summaryd:idid_for_report_summary@+id/question_title"-->
                 <!--android:layout_width="match_parent"-->
                 <!--android:layout_height="wrap_content"-->
                 <!--android:layout_margin="8dp"-->
@@ -84,7 +84,7 @@
 
                 <!--<TextView-->
                 <!--android:layout_margin="8dp"-->
-                <!--android:id="@+id/answer"-->
+                <!--andrid_for_report_summaryd:idid_for_report_summary@+id/answer"-->
                 <!--android:layout_width="match_parent"-->
                 <!--android:layout_height="wrap_content"-->
                 <!--android:text="A: "-->
@@ -93,7 +93,7 @@
                 <!--android:textStyle="bold" />-->
 
                 <!--<LinearLayout-->
-                <!--android:id="@+id/parent"-->
+                <!--andrid_for_report_summaryd:idid_for_report_summary@+id/parent"-->
                 <!--android:layout_width="match_parent"-->
                 <!--android:layout_height="match_parent"-->
                 <!--android:layout_margin="8dp"-->
@@ -102,14 +102,14 @@
 
 
                 <!--<TextView-->
-                <!--android:id="@+id/created_at"-->
+                <!--andrid_for_report_summaryd:idid_for_report_summary@+id/created_at"-->
                 <!--android:layout_width="match_parent"-->
                 <!--android:layout_height="wrap_content"-->
                 <!--android:textSize="20sp" />-->
 
 
                 <!--&lt;!&ndash;<ImageView&ndash;&gt;-->
-                <!--&lt;!&ndash;android:id="@+id/take_picture"&ndash;&gt;-->
+                <!--&lt;!&ndash;andrid_for_report_summaryd:idid_for_report_summary@+id/take_picture"&ndash;&gt;-->
                 <!--&lt;!&ndash;android:layout_margin="4dp"&ndash;&gt;-->
                 <!--&lt;!&ndash;android:paddingTop="10dp"&ndash;&gt;-->
                 <!--&lt;!&ndash;android:paddingBottom="10dp"&ndash;&gt;-->
@@ -124,7 +124,7 @@
                 <!--android:background="@color/drawer_background_color"></LinearLayout>-->
 
                 <!--<ImageView-->
-                <!--android:id="@+id/capture"-->
+                <!--andrid_for_report_summaryd:idid_for_report_summary@+id/capture"-->
                 <!--android:layout_width="match_parent"-->
                 <!--android:layout_height="200dp"-->
                 <!--android:background="@drawable/ic_camera"/>-->
@@ -152,6 +152,6 @@
     <!--android:layout_margin="8dp"-->
     <!--android:layout_width="match_parent"-->
     <!--android:layout_height="match_parent"-->
-    <!--android:id="@+id/list"/>-->
+    <!--andrid_for_report_summaryd:idid_for_report_summary@+id/list"/>-->
 
 </LinearLayout>

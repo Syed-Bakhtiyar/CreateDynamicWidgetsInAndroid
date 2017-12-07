@@ -48,7 +48,7 @@
 
 
             <!--<ImageView-->
-            <!--android:id="@+id/take_picture"-->
+            <!--andrid_for_report_summaryd:idid_for_report_summary@+id/take_picture"-->
             <!--android:layout_margin="4dp"-->
             <!--android:paddingTop="10dp"-->
             <!--android:paddingBottom="10dp"-->
@@ -63,7 +63,7 @@
                 android:background="@color/drawer_background_color"></LinearLayout>
 
             <!--<ImageView-->
-                <!--android:id="@+id/capture"-->
+                <!--andrid_for_report_summaryd:idid_for_report_summary@+id/capture"-->
                 <!--android:layout_width="match_parent"-->
                 <!--android:layout_height="200dp"-->
                 <!--android:background="@drawable/ic_camera"/>-->

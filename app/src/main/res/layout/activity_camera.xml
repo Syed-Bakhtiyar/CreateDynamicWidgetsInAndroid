@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="SHOP DETAILS"
+            android:text="Survey Report"
             android:textColor="@color/colorWhite"
             android:textSize="21sp" />
 
@@ -133,7 +133,7 @@
 
         <!---->
         <!--<TextView-->
-        <!--android:id="@+id/check"-->
+        <!--andrid_for_report_summaryd:idid_for_report_summary@+id/check"-->
         <!--android:textSize="25sp"-->
         <!--android:gravity="center"-->
         <!--android:textColor="#fff"-->
@@ -145,8 +145,8 @@
     </RelativeLayout>
 
     <ImageView
+        android:id="@+id/flash"
         android:scaleType="centerInside"
-        android:background="#fff"
         android:src="@drawable/flash"
         android:layout_margin="8dp"
         android:layout_alignParentRight="true"

@@ -47,6 +47,7 @@ public class CameraActivity extends Activity implements Camera.PictureCallback, 
 
     private Camera mCamera;
     private ImageView mCameraImage;
+    private ImageView flash;
     private SurfaceView mCameraPreview;
     private ImageView mCaptureImageButton;
     private byte[] mCameraData;
@@ -65,6 +66,8 @@ public class CameraActivity extends Activity implements Camera.PictureCallback, 
     ProgressDialog dialogSave;
 
     TextView check;
+
+    Camera.Parameters parameters;
 
     private File getOutputMediaFile(){
         // To be safe, you should check that the SDCard is mounted
@@ -128,7 +131,9 @@ public class CameraActivity extends Activity implements Camera.PictureCallback, 
 
         dialogSave = new ProgressDialog(this);
 
-//        check = (TextView) findViewById(R.id.check);
+
+
+//        check = (TextView) findViewById(R.id_for_report_summary.check);
 
         dialogSave.setMessage("Saving Image...");
 
@@ -138,6 +143,8 @@ public class CameraActivity extends Activity implements Camera.PictureCallback, 
 
 
         title = (TextView) findViewById(R.id.title);
+
+        flash = (ImageView) findViewById(R.id.flash);
 
 //        title.setText(StaticClass.jsDetailName);
 
@@ -165,13 +172,48 @@ public class CameraActivity extends Activity implements Camera.PictureCallback, 
             }
         };
 
+        flash.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                parameters.setFlashMode(Camera.Parameters.FLASH_MODE_ON);
+
+                mCamera.setParameters(parameters);
+
+                mCamera.startPreview();
+
+                Toast.makeText(CameraActivity.this, "On Mode", Toast.LENGTH_SHORT).show();
+
+
+//
+//                if(parameters.getFlashMode() == Camera.Parameters.FLASH_MODE_OFF){
+//
+//
+//                }else {
+//
+//                    parameters.setFlashMode(Camera.Parameters.FLASH_MODE_OFF);
+//
+//                    mCamera.setParameters(parameters);
+//
+//                    mCamera.startPreview();
+//
+//                    Toast.makeText(CameraActivity.this, "On Mode", Toast.LENGTH_SHORT).show();
+//
+//
+//                }
+
+
+
+            }
+        });
+
 
 
         mCameraImage = (ImageView) findViewById(R.id.camera_image_view);
         mCameraImage.setVisibility(View.GONE);
         mCameraImage.setScaleType(ImageView.ScaleType.MATRIX);
 
-//        findViewById(R.id.rotate).setOnClickListener(new View.OnClickListener() {
+//        findViewById(R.id_for_report_summary.rotate).setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
 //                Matrix matrix = new Matrix();
@@ -188,7 +230,7 @@ public class CameraActivity extends Activity implements Camera.PictureCallback, 
         surfaceHolder.setKeepScreenOn(true);
         mCaptureImageButton = (ImageView) findViewById(R.id.capture_image_button);
         reset = (LinearLayout) findViewById(R.id.reset);
-//        ok = (ImageView) findViewById(R.id.done);
+//        ok = (ImageView) findViewById(R.id_for_report_summary.done);
         mCaptureImageButton.setOnClickListener(mCaptureImageButtonClickListener);
 
         doneButton = (LinearLayout) findViewById(R.id.done);
@@ -231,6 +273,8 @@ public class CameraActivity extends Activity implements Camera.PictureCallback, 
             try {
                 mCamera = Camera.open();
                 mCamera.setPreviewDisplay(mCameraPreview.getHolder());
+
+                parameters = mCamera.getParameters();
 
                 Display display = ((WindowManager)
                         getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay();

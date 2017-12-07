@@ -26,8 +26,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -53,7 +51,7 @@ import bilal.com.createdynamicwidgets.CustomFonts.RegularCustomTextView;
 
 //import cz.msebera.android.httpclient.Header;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class ServeyReportActivity extends AppCompatActivity implements View.OnClickListener {
 
     ImageView button_sync_data;
 
@@ -98,9 +96,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_servey_report);
 
-//        findViewById(R.id.temp).setOnClickListener(new View.OnClickListener() {
+//        findViewById(R.id_for_report_summary.temp).setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
 //                finish();
@@ -147,11 +145,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initialize(){
 
-        dbHelper = new DBHelper(MainActivity.this);
+        dbHelper = new DBHelper(ServeyReportActivity.this);
 
         asyncHttpClient = new AsyncHttpClient();
 
-        progressDialog = new ProgressDialog(MainActivity.this);
+        progressDialog = new ProgressDialog(ServeyReportActivity.this);
 
         arrayList = dbHelper.getServeyQuestion();
 
@@ -200,9 +198,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         }
 
-//        listView = (ListView) findViewById(R.id.list);
+//        listView = (ListView) findViewById(R.id_for_report_summary.list);
 
-//        serveyCustomAdapter = new ServeyCustomAdapter(MainActivity.this,array_list);
+//        serveyCustomAdapter = new ServeyCustomAdapter(ServeyReportActivity.this,array_list);
 
 //        listView.setAdapter(serveyCustomAdapter);
 
@@ -343,7 +341,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 JSONObject servey = dataItem.getJSONObject("survey");
 
-                String id = servey.getString("id");
+                String id = servey.getString("id_for_report_summary");
 
                 String title = servey.getString("title");
 
@@ -365,7 +363,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     JSONObject question_item = question_items.getJSONObject("question");
 
-                    String question_server_id = question_item.getString("id");
+                    String question_server_id = question_item.getString("id_for_report_summary");
 
                     String question_title = question_item.getString("title");
 
@@ -551,7 +549,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             layoutParam_for_linear.setMargins(8,8,8,8);
 
-            LinearLayout layout_for_all = new LinearLayout(MainActivity.this);
+            LinearLayout layout_for_all = new LinearLayout(ServeyReportActivity.this);
 
             layout_for_all.setPadding(18,18,18,18);
 
@@ -560,9 +558,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             layout_for_all.setOrientation(LinearLayout.VERTICAL);
 
 
-            CardView cardView = new CardView(MainActivity.this);
+            CardView cardView = new CardView(ServeyReportActivity.this);
 
-            CardView card_for_radio = new CardView(MainActivity.this);
+            CardView card_for_radio = new CardView(ServeyReportActivity.this);
 
 
             cardView.setLayoutParams(layoutParam_for_linear);
@@ -593,9 +591,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 80);
 
-                    LinearLayout heading = new LinearLayout(MainActivity.this);
+                    LinearLayout heading = new LinearLayout(ServeyReportActivity.this);
 
                     heading.setLayoutParams(layoutParams);
+
+                    heading.setPadding(10,10,10,10);
 
                     heading.setOrientation(LinearLayout.VERTICAL);
 
@@ -607,7 +607,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     LinearLayout.LayoutParams layoutParams_text = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
-                    BoldCustomTextView textView = new BoldCustomTextView(MainActivity.this);
+                    BoldCustomTextView textView = new BoldCustomTextView(ServeyReportActivity.this);
 
                     textView.setLayoutParams(layoutParams_text);
 
@@ -645,11 +645,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     ArrayList<CheckBox> checkBoxes = new ArrayList<>();
 
-                    LinearLayout.LayoutParams imageLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                    LinearLayout.LayoutParams imageLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
                     imageLayoutParams.setMargins(4,4,4,4);
 
-                    ImageView imageView = new ImageView(MainActivity.this);
+                    ImageView imageView = new ImageView(ServeyReportActivity.this);
                     imageView.setLayoutParams(imageLayoutParams);
                     imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 
@@ -662,14 +662,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     radioParams.setMargins(8,8,8,8);
 
-                    RadioGroup radioGroup = new RadioGroup(MainActivity.this);
+                    RadioGroup radioGroup = new RadioGroup(ServeyReportActivity.this);
                     radioGroup.setOrientation(LinearLayout.VERTICAL);
                     radioGroup.setLayoutParams(radioParams);
                     radioGroup.setGravity(3); // for left
 
                     LinearLayout linearLayout;
 
-                    LinearLayout linearLayoutChild = new LinearLayout(MainActivity.this);
+                    LinearLayout linearLayoutChild = new LinearLayout(ServeyReportActivity.this);
 
 
                     linearLayoutChild.setLayoutParams(layoutParams);
@@ -678,7 +678,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     linearLayoutChild.setGravity(3);
 
-                    RegularCustomTextView question_title = new RegularCustomTextView(MainActivity.this);
+                    RegularCustomTextView question_title = new RegularCustomTextView(ServeyReportActivity.this);
 
                     question_title.setTextColor(getResources().getColor(R.color.colorBlack));
 
@@ -692,7 +692,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     String answer_type = serveyModel.getAnswer_type();
 
-//                capture = (ImageView) convertView.findViewById(R.id.capture);
+//                capture = (ImageView) convertView.findViewById(R.id_for_report_summary.capture);
 //
 //                capture.setOnClickListener(new View.OnClickListener() {
 //                    @Override
@@ -711,11 +711,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                         if(answer_type.equals("Radio Buttons")){
 
-                            final ImageView take_picture = new ImageView(MainActivity.this);
+                            final ImageView take_picture = new ImageView(ServeyReportActivity.this);
 
                             take_picture.setLayoutParams(imageLayoutParams);
 
                             layout_for_all.addView(question_title);
+
+
 
                             File f = null;
 
@@ -744,7 +746,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                                     question_id = ss.getQuestion_id();
 
-                                    startActivityForResult(new Intent(MainActivity.this, CameraActivity.class), REQUEST_CODE_CAPTURE_IMAGE);
+                                    startActivityForResult(new Intent(ServeyReportActivity.this, CameraActivity.class), REQUEST_CODE_CAPTURE_IMAGE);
 
                                 }
                             });
@@ -765,12 +767,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                                     JSONObject val = (JSONObject) option_array.get(radio_index);
 
-                                    LinearLayout parent_radio = new LinearLayout(MainActivity.this);
+                                    LinearLayout parent_radio = new LinearLayout(ServeyReportActivity.this);
 
                                     parent_radio.setOrientation(LinearLayout.VERTICAL);
 
 
-                                    RadioButton radioButton = new RadioButton(MainActivity.this);
+                                    RadioButton radioButton = new RadioButton(ServeyReportActivity.this);
 
                                     radioButton.setId(R.id.radio+radio_index);
 
@@ -847,9 +849,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                                                 radioButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.background_after_check));
 
+                                                radioButton.setButtonDrawable(getResources().getDrawable(R.drawable.success__));
 
+//                                                radioButton.setButtonDrawable(getResources().getDrawable(R.drawable.success__));
 
                                             }else {
+
+                                                radioButton.setButtonDrawable(getResources().getDrawable(R.drawable.background_for_radio));
 
 //                                                for_radio.put("servey_key",serveyModel1.getQuestionTitle());
 //
@@ -886,7 +892,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                         }else if(answer_type.equals("Text")){
 
-                            final EditText editText = new EditText(MainActivity.this);
+                            final EditText editText = new EditText(ServeyReportActivity.this);
 
                             editText.setLayoutParams(layoutParams);
 
@@ -897,7 +903,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                            editText.setId(0);
 
 
-                            final ImageView take_picture = new ImageView(MainActivity.this);
+                            final ImageView take_picture = new ImageView(ServeyReportActivity.this);
 
                             take_picture.setLayoutParams(imageLayoutParams);
 
@@ -930,7 +936,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                                     question_id = ss.getQuestion_id();
 
-                                    startActivityForResult(new Intent(MainActivity.this, CameraActivity.class), REQUEST_CODE_CAPTURE_IMAGE);
+                                    startActivityForResult(new Intent(ServeyReportActivity.this, CameraActivity.class), REQUEST_CODE_CAPTURE_IMAGE);
 
                                 }
                             });
@@ -992,7 +998,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             layout_for_all.addView(question_title);
 
 
-                            final ImageView take_picture = new ImageView(MainActivity.this);
+                            final ImageView take_picture = new ImageView(ServeyReportActivity.this);
 
                             take_picture.setLayoutParams(imageLayoutParams);
 
@@ -1025,7 +1031,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                                     question_id = ss.getQuestion_id();
 
-                                    startActivityForResult(new Intent(MainActivity.this, CameraActivity.class), REQUEST_CODE_CAPTURE_IMAGE);
+                                    startActivityForResult(new Intent(ServeyReportActivity.this, CameraActivity.class), REQUEST_CODE_CAPTURE_IMAGE);
 
                                 }
                             });
@@ -1038,7 +1044,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                                     JSONObject jsonObject = (JSONObject) jsonArray.get(check_index);
 
-                                    CheckBox checkBox = new CheckBox(MainActivity.this);
+                                    CheckBox checkBox = new CheckBox(ServeyReportActivity.this);
 
                                     LinearLayout.LayoutParams for_check = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, 50);
 
@@ -1091,6 +1097,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                                                 checkBox.setBackgroundDrawable(getResources().getDrawable(R.drawable.background_after_check));
 
+                                                checkBox.setButtonDrawable(getResources().getDrawable(R.drawable.success__));
+
                                             }else {
 
                                                 for_check.put("servey_key",serveyModel1.getServey_id());
@@ -1104,6 +1112,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                                 dbHelper.insertAnswer(serveyModel1.getQuestion_id(),String.valueOf(jsonObject));
 
                                                 checkBox.setBackgroundDrawable(getResources().getDrawable(R.drawable.background));
+
+                                                checkBox.setButtonDrawable(getResources().getDrawable(R.drawable.background_for_radio));
 
                                             }
 
@@ -1162,7 +1172,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
 
-                                final ImageView take_picture = new ImageView(MainActivity.this);
+                                final ImageView take_picture = new ImageView(ServeyReportActivity.this);
 
                                 take_picture.setLayoutParams(imageLayoutParams);
 
@@ -1197,7 +1207,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                                         question_id = ss.getQuestion_id();
 
-                                        startActivityForResult(new Intent(MainActivity.this, CameraActivity.class), REQUEST_CODE_CAPTURE_IMAGE);
+                                        startActivityForResult(new Intent(ServeyReportActivity.this, CameraActivity.class), REQUEST_CODE_CAPTURE_IMAGE);
 
                                     }
                                 });
@@ -1208,7 +1218,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                                     JSONObject jsonObject = (JSONObject) jsonArray.get(check_index);
 
-                                    CheckBox checkBox = new CheckBox(MainActivity.this);
+                                    CheckBox checkBox = new CheckBox(ServeyReportActivity.this);
 
                                     LinearLayout.LayoutParams for_check = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 
@@ -1296,7 +1306,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             }
                         }else if(serveyModel.getAnswer_type().equals("Text")){
 
-                            final EditText editText = new EditText(MainActivity.this);
+                            final EditText editText = new EditText(ServeyReportActivity.this);
 
                             editText.setLayoutParams(layoutParams);
 
@@ -1307,7 +1317,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                            editText.setId(-1);
 
 
-                            final ImageView take_picture = new ImageView(MainActivity.this);
+                            final ImageView take_picture = new ImageView(ServeyReportActivity.this);
 
                             take_picture.setLayoutParams(imageLayoutParams);
 
@@ -1341,7 +1351,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                                     question_id = ss.getQuestion_id();
 
-                                    startActivityForResult(new Intent(MainActivity.this, CameraActivity.class), REQUEST_CODE_CAPTURE_IMAGE);
+                                    startActivityForResult(new Intent(ServeyReportActivity.this, CameraActivity.class), REQUEST_CODE_CAPTURE_IMAGE);
 
                                 }
                             });

@@ -7,6 +7,6 @@ import android.widget.ImageView;
  */
 
 public class StaticClass {
-    public static String id;
+    public static String id_for_report_summary;
 
 }
